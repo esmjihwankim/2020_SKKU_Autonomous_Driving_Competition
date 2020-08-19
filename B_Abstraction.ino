@@ -84,7 +84,7 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool
 
 
 //when parking
-void park(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
+void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
 {
   setTimer();
   

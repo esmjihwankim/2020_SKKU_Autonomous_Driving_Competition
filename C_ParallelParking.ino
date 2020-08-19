@@ -2,7 +2,7 @@
  * Used Functions:
  * void timedStop(int specifiedTime)
  * void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool enableIR)
- * void park(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
+ * void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
  * 
  * Remember 
  * forwardBack == 1 -> 100% speed in forward direction
@@ -20,14 +20,15 @@ void parallelParking()
   timedDrive(0, 1, 13, true);
 
   //우회전, 후진
-  timedDrive(1, -1, 10, true);
-  
+  timedDrive(1, -1, 8, false);
+    
   //좌회전, 후진 
-  park(-1, -1, 130, false);
+  distancedDrive(-1, -1, 150, false);
 
   //좌회전, 주차장 탈출
-  timedDrive(-1, 1, 8, true);
+  timedDrive(-1, 0.8, 8, true);
 
-  //우회전
-  timedDrive(1, 1, 5, true);
+  //우회전, 탈출
+  timedDrive(1, 0.8, 5, true);
+
 }
