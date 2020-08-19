@@ -2,6 +2,9 @@
  * Controls Servo and DC Motor 
  */
 
+#include "Arduino.h"
+
+
 // 앞바퀴 조향
 inline void setSteering(Servo servo, float* cur_Steering, float* nxt_Steering) 
 {

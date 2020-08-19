@@ -1,12 +1,19 @@
 /*
  * **Important**
- * 미션 수행을 위한 async 타이머 이용 Driving -- For General Use
+ * 미션 수행을 위한 async 타이머 이용 Driving 
  * Abstraction layer for missions, for example, parallel/backward parking
- * Performs Designated Task for a given time period
+ * Performs Designated Task in async for a given time period
  * 
  * 0. Stop for XX seconds
  * 1. Steer straight/right/left and drive forward/backward for XX seconds. 
- *    If there is a 
+ *    
+ *    
+ *    float gfCenterDistance;
+      float gfLeftDistance;
+      float gfRightDistance;  
+ *    
+ *    bool gbLeftIR;
+      bool gbRightIR;
  */
 
 //타이머 세팅
@@ -44,7 +51,7 @@ void timedStop(int specifiedTime)
 
 //Drives for a designated amount of time 
 //with response to IR sensors included
-inline void timedDrive(int rightLeft, int forwardBack, int specifiedTime, bool enableIR)
+inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool enableIR)
 {
   setTimer(); 
   
@@ -58,12 +65,12 @@ inline void timedDrive(int rightLeft, int forwardBack, int specifiedTime, bool e
     {
       if(gbLeftIR != detect_ir)
       {
-        compute_speed = 0.3;
+        compute_speed = 0.4;
         compute_steering = 1;
       }
       else if(gbRightIR != detect_ir)
       {
-        compute_speed = 0.3;
+        compute_speed = 0.4;
         compute_steering = -1;
       }
 
@@ -77,16 +84,20 @@ inline void timedDrive(int rightLeft, int forwardBack, int specifiedTime, bool e
 
 
 //when parking
-void park(int rightLeft, int specifiedDistanced, bool enableIR)
+void park(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
 {
-  //for parallel parking 
+  setTimer();
+  
+  //using ultrasonic sensor 
   if(enableIR == false) 
-  {
-    
-  }
-  //for backward parking 
-  else {
-    
+  { 
+    while (gfRightDistance > specifiedDistance)
+    {
+      compute_steering = rightLeft;
+      compute_speed = forwardBack;
+      nextMove();
+    }
   }
   
+  stopTimer();
 }
