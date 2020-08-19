@@ -1,45 +1,28 @@
+/* 평행주차 
+ * Uses Functions:
+ * void timedStop(int specifiedTime)
+ * void timedDrive(int rightLeft, int forwardBack, int specifiedTime, bool enableIR)
+ * void park(int rightLeft, int specifiedDistanced, int enableIR)
 
-//평행주차 
-inline void parallelParking()
+ * RightLeft: 
+ * 
+ * 
+ * 
+ */
+
+void parallelParking()
 {   
   //정지
-  setTimer();
-  while(iTimeCount < 15) { //stop for less than 1 second
-    compute_steering = 0;
-    compute_speed = 0;
-    nextMove();
-  }
-  stopTimer();
-  
+  timedStop(10);
   
   //정지선 지나 1.5초
-  setTimer(); 
-  while(iTimeCount < 20){
-    compute_steering = 0;
-    
-    if(gbLeftIR != detect_ir)
-    {
-      compute_steering = 1;
-    }
-    else if(gbRightIR != detect_ir)
-    {
-      compute_steering = -1;
-    }
-    
-    compute_speed = 1;
-    nextMove();
-  }
-  stopTimer();
+  timedDrive(0, 1, 10, true);
+  timedStop(20);
   
-  //정지
+  //우회, 후진
   
   
-
-  //바퀴 오른쪽, 후진
- 
-
-  
-  //바퀴 왼쪽, 후진 
+  //좌회전, 후진 
   
   
 

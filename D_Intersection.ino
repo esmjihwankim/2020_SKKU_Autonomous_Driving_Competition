@@ -1,4 +1,4 @@
 
-inline void intersection(){
+void intersection(){
   
 }

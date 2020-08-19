@@ -28,13 +28,13 @@ inline void drive()
   //오른쪽 차선 검출
   else if(gbRightIR != detect_ir) {
     compute_steering = -1;
-    compute_speed = 0.1;
+    compute_speed = 0.3;
   }
 
   //왼쪽 차선 검출
   else if(gbLeftIR != detect_ir) {
     compute_steering = 1;
-    compute_speed = 0.1;
+    compute_speed = 0.3;
   }
 
   nextMove(); 
@@ -53,7 +53,8 @@ inline void sense()
   gfRightDistance = getDistance(R_TRIG, R_ECHO);
 
   //미션 중 로그 프린트
-  if(bInMission == true){
+  if(bInMission == true)
+  {
     iTimeCount++;
     Serial.println(iTimeCount);
     Serial.print("Center Distance  ");
@@ -63,7 +64,6 @@ inline void sense()
     Serial.print("Right Distance  ");
     Serial.println(gfRightDistance);
   }
- 
 }
 
 
