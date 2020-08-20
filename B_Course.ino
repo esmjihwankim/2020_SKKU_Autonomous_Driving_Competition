@@ -37,17 +37,13 @@ inline void proceedMission()
         break;
 
       case 5: 
-        Serial.println("#500 Backward Parking Stage 2");
+        Serial.println("#600 Impediment Avoidence");
         break;
 
       case 6:
-        Serial.println("#600 Impediment Avoidence");
+        Serial.println("#700 Finish Line");  
         break;
         
-      case 7: 
-        Serial.println("#700 Finish Line");
-        break;
-      
       default:
         Serial.println("#Error:Unidentified Course Location");
         break;

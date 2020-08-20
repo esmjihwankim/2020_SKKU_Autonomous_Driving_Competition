@@ -14,5 +14,6 @@
 
 void intersection(){
   timedStop(15);
-  timedDrive(0, 1, 10, true);
+  timedDrive(0, 0.5, 3, false);
+  timedDrive(0, 1, 5, true);
 }

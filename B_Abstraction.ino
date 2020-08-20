@@ -83,21 +83,51 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool
 }
 
 
-//when parking
-void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
+//when parking using ultrasonic sensor 
+void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance)
 {
   setTimer();
   
-  //using ultrasonic sensor 
-  if(enableIR == false) 
-  { 
-    while (gfRightDistance > specifiedDistance)
+  //move until the right sensor becomes close to the wall
+  while (gfRightDistance > specifiedDistance)
+  {
+    compute_steering = rightLeft;
+    compute_speed = forwardBack;
+
+    //when imepediment placed in front
+    if(gfCenterDistance < 300)
     {
-      compute_steering = rightLeft;
-      compute_speed = forwardBack;
-      nextMove();
+      compute_steering = -1;
     }
+ 
+    //when line sensed
+    if(gbLeftIR != detect_ir)
+    {
+      compute_steering = 1;
+    } 
+    else if(gbRightIR != detect_ir)
+    {
+      compute_steering = -1;
+    }
+    
+    nextMove();
   }
-  
+
+  stopTimer();
+}
+
+
+void reverseParking()
+{
+  setTimer();
+
+  while(gbLeftIR == detect_ir || gbRightIR == detect_ir)
+  {
+    compute_steering = 0;
+    compute_speed = -0.5;
+    nextMove();
+  }
+
+
   stopTimer();
 }
