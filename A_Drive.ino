@@ -21,6 +21,7 @@ inline void drive()
   //양쪽 차선 모두 검출
   else if (gbRightIR != detect_ir && gbLeftIR != detect_ir){
     //Course Mission
+    HM10.write("---Increasing Stage Number\n");
     iStageNumber++;
     proceedMission();   //Course.ino
   }

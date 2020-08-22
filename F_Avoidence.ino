@@ -16,7 +16,7 @@
 
 void avoidence()
 {
-  
+  timedStop(15);
 
   bool finishedMission = false;
 
@@ -35,8 +35,10 @@ void avoidence()
       //후진
       timedDrive(0, -1, 5, true, false);
       //좌회전
-      compute_steering = -1;
-      compute_speed = 0.6;
+      timedDrive(-1, 0.6, 5, true, false);
+      //우회전
+      timedDrive(1, 0.6, 3, true, false);
+      
       
     }
     //장애물 30cm 전방에 있을 때 좌회전 

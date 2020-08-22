@@ -7,10 +7,12 @@
  */
 #include <MsTimer2.h>
 #include <Servo.h>
+#include <SoftwareSerial.h>
 #include "_PinLocations.h"
 #include "Motor.h"
 #include "UltraSonic.h"
 
+SoftwareSerial HM10(BT_TX, BT_RX);
 Servo servo;
 
 float gfCenterDistance;
@@ -36,7 +38,8 @@ float compute_speed = 0;
 
 // Setup & Loop =====================================================================
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
+  HM10.begin(9600);
   servo.attach(SERVO_PIN);  //서보모터 초기화
   setPin();   //  _PinLocations.h 
   

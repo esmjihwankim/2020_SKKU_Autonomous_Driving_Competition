@@ -17,46 +17,37 @@ inline void proceedMission()
   switch(iStageNumber)
   {
       case 1:
-        Serial.println("#100 Parallel Parking");
+        HM10.write("#100 Parallel Parking\n");
         parallelParking();
         break;
 
       case 2:
-        Serial.println("#200 Intersection 1");
+        HM10.write("#200 Intersection 1\n");
         intersection(false);
         break;
 
       case 3: 
-        Serial.println("#300 Intersection 2");
+        HM10.write("#300 Intersection 2\n");
         intersection(false);
         break;
 
       case 4:
-        Serial.println("#400 Prepare Backward Parking");
-        prepareBackwardParking();
-        break;
-      
-      case 5:
-        Serial.println("#400 Backward Parking #1");
+        HM10.write("#400 Backward Parking\n");
         backwardParking();
         break;
-
-      case 6:
-        Serial.println("#500 Backward Parking #2");
-        escapeBackwardParking();
-
-      case 7: 
-        Serial.println("#600 Impediment Avoidence");
+      
+      case 5: 
+        HM10.write("#500 Impediment Avoidence\n");
         avoidence();
         break;
 
-      case 8:
-        Serial.println("#700 Finish Line");  
+      case 6:
+        HM10.write("#600 Finish Line\n");  
         timedStop(2000);
         break;
         
       default:
-        Serial.println("#Error:Unidentified Course Location");
+        HM10.write("#Error:Unidentified Course Location\n");
         break;
     }
 }

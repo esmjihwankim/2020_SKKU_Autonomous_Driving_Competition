@@ -161,8 +161,8 @@ void reverse(bool bSenseIR)
     if(gfLeftDistance < 200 && gfRightDistance < 200 || gbLeftIR != detect_ir && gbRightIR != detect_ir){
       break;
     }
-    
     nextMove();
   }
+  
   stopTimer();
 }
