@@ -7,7 +7,7 @@ inline void drive()
   sense();
 
   //전방 물체 15cm 이내 거리에 있을 시 정지 
-  if(gfCenterDistance <= 90) {
+  if(gfCenterDistance <= 100) {
     compute_steering = 0;
     compute_speed = 0;  
   }
@@ -22,23 +22,24 @@ inline void drive()
   else if (gbRightIR != detect_ir && gbLeftIR != detect_ir){
     //Course Mission
     iStageNumber++;
-    proceedMission();
+    proceedMission();   //Course.ino
   }
 
   //오른쪽 차선 검출
   else if(gbRightIR != detect_ir) {
     compute_steering = -1;
-    compute_speed = 0.3;
+    compute_speed = 0.2;
   }
 
   //왼쪽 차선 검출
   else if(gbLeftIR != detect_ir) {
     compute_steering = 1;
-    compute_speed = 0.3;
+    compute_speed = 0.2;
   }
 
   nextMove(); 
 }
+
 
 //센서 감지
 inline void sense()

@@ -51,7 +51,7 @@ void timedStop(int specifiedTime)
 
 //Drives for a designated amount of time 
 //with response to IR sensors included
-inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool enableIR)
+inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool senseLine, bool senseStop)
 {
   setTimer(); 
   
@@ -61,19 +61,25 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool
     compute_speed = forwardBack;
 
     
-    if(enableIR == true) 
+    if(senseLine == true) 
     {
       if(gbLeftIR != detect_ir)
       {
-        compute_speed = 0.4;
+        compute_speed = 1;
         compute_steering = 1;
       }
       else if(gbRightIR != detect_ir)
       {
-        compute_speed = 0.4;
+        compute_speed = 1;
         compute_steering = -1;
       }
 
+    }
+
+    if(senseStop == true){
+      if(gbLeftIR != detect_ir && gbRightIR != detect_ir){
+        break;
+      }
     }
     
     nextMove();
@@ -117,17 +123,46 @@ void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance)
 }
 
 
-void reverseParking()
+void reverse(bool bSenseIR)
 {
   setTimer();
 
+  //move backwards until line is sensed by both sensors
   while(gbLeftIR == detect_ir || gbRightIR == detect_ir)
   {
     compute_steering = 0;
-    compute_speed = -0.5;
+    compute_speed = -0.4;
+
+    //when car too close to wall during parking
+    if(gfLeftDistance < 100 && gfRightDistance > 100)
+    {
+      compute_steering = 1;
+    }
+    else if(gfLeftDistance > 100 && gfRightDistance < 100)
+    {
+      compute_steering = -1;
+    }
+
+    if(bSenseIR == true) 
+    {
+      //when line sensed
+      if(gbLeftIR != detect_ir)
+      {
+        compute_steering = 1;
+      } 
+      else if(gbRightIR != detect_ir)
+      {
+        compute_steering = -1;
+      }
+    }
+
+    
+    //when the car is parked and left and right ultrasonic sensors ar sensing less than 15cm
+    if(gfLeftDistance < 200 && gfRightDistance < 200 || gbLeftIR != detect_ir && gbRightIR != detect_ir){
+      break;
+    }
+    
     nextMove();
   }
-
-
   stopTimer();
 }

@@ -12,8 +12,8 @@
  */
 
 
-void intersection(){
+void intersection(bool recognizeLine){
   timedStop(15);
-  timedDrive(0, 0.5, 3, false);
-  timedDrive(0, 1, 5, true);
+  timedDrive(0, 0.4, 2, recognizeLine, false);
+  timedDrive(0, 0.4, 5, true, false);
 }

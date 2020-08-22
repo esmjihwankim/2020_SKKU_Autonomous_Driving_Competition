@@ -23,25 +23,36 @@ inline void proceedMission()
 
       case 2:
         Serial.println("#200 Intersection 1");
-        intersection();
+        intersection(false);
         break;
 
       case 3: 
         Serial.println("#300 Intersection 2");
-        intersection();
+        intersection(false);
         break;
 
       case 4:
-        Serial.println("#400 Backward Parking Stage 1");
+        Serial.println("#400 Prepare Backward Parking");
+        prepareBackwardParking();
+        break;
+      
+      case 5:
+        Serial.println("#400 Backward Parking #1");
         backwardParking();
         break;
 
-      case 5: 
+      case 6:
+        Serial.println("#500 Backward Parking #2");
+        escapeBackwardParking();
+
+      case 7: 
         Serial.println("#600 Impediment Avoidence");
+        avoidence();
         break;
 
-      case 6:
+      case 8:
         Serial.println("#700 Finish Line");  
+        timedStop(2000);
         break;
         
       default:

@@ -16,22 +16,22 @@ void parallelParking()
   timedStop(10);
 
   //왼쪽으로 꺾어 선에 붙은 후 벽면 모서리 센싱할 때까지 직진
-  timedDrive(-1, 0.4, 1, true);
-  timedDrive(0, 1, 13, true);
+  timedDrive(-1, 0.4, 1, true, false);
+  timedDrive(0, 1, 13, true, false);
 
   //우회전, 후진
-  timedDrive(1, -1, 10, false);
+  timedDrive(1, -1, 10, false, false);
   
   //좌회전, 후진 
-  distancedDrive(-1, -1, 180);
+  distancedDrive(-1, -1, 150);
 
   //정지
   timedStop(10);
 
   //좌회전, 주차장 탈출
-  timedDrive(-1, 0.6, 5, true);
+  timedDrive(-1, 0.4, 6, true, false);
 
   //우회전, 탈출
-  timedDrive(1, 0.6, 5, true);
+  timedDrive(1, 0.4, 3, true, false);
 
 }

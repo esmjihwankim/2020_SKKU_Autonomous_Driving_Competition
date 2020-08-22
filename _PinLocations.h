@@ -16,7 +16,7 @@
 #define L_TRIG A2  // 좌측 초음파 센서 TRIG 핀
 #define L_ECHO A1  // 좌측 초음파 센서 ECHO 핀
 #define R_TRIG A5   // 우측 초음파 센서 TRIG 핀
-#define R_ECHO 2  // 우측 초음파 센서 ECHO 핀
+#define R_ECHO 4  // 우측 초음파 센서 ECHO 핀
 
 
 void setPin(void) 

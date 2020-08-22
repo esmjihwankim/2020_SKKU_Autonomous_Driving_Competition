@@ -11,23 +11,33 @@
  */
 
 
-void backwardParking(){
-
-  //stop for 1.5 sec 
+void prepareBackwardParking(){
+  
+  //정지 1.5 sec 
   timedStop(15);
+
+  //직진
+  timedDrive(0, 0.5, 4, true, true);
+  
+}
+
+
+void backwardParking(){
+  //우회전 후진
+  timedDrive(1, -1, 6, false, false);
   
   //천천히 좌회전
-  timedDrive(-1, 0.6, 10, false);
-
-  //직진 
-  timedDrive(0, 1, 5, true);
+  timedDrive(-1, 0.8, 12, true, false);
   
   //후진 -- IR센서가 정지선 읽을 때까지
-  reverseParking();
+  reverse(false);
+}
 
+void escapeBackwardParking()
+{
   //정지
   timedStop(15);
 
   //출발
-  timedDrive(0, 1, 10, true);
+  timedDrive(0, 1, 10, true, false);
 }
