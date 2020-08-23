@@ -30,22 +30,41 @@ void avoidence()
     compute_speed = 1;
     
     //장애물 20cm 전방에 있을 때
-    if(gfCenterDistance <= 300)
+    if(gfCenterDistance <= 200)
     {
+      HM10.write("---Object 20cm in front");
       //후진
-      timedDrive(0, -1, 5, true, false);
+      timedDrive(0, -1, 2, true, false);
+      
       //좌회전
-      timedDrive(-1, 0.6, 5, true, false);
+      while(gfCenterDistance <= 200)
+      {
+        sense();
+        timedDrive(-1, 0.6, 1, false, false);
+      }
+      timedDrive(-0.5, 0.6, 5, true, false);
+
+      //직진
+      timedDrive(0, 0.5, 3, true, 0);
+      
       //우회전
       timedDrive(1, 0.6, 3, true, false);
-      
-      
     }
-    //장애물 30cm 전방에 있을 때 좌회전 
-    else if(gfCenterDistance <= 400)
+    //장애물 30cm 전방에 있을 때  
+    else if(gfCenterDistance <= 300)
     {
-      timedDrive(-1, 0.6, 10, true, false);   
-      timedDrive(0, 0.5, 5, true, 0);
+      HM10.write("---Object 30cm in front");
+
+      //좌회전
+      while(gfCenterDistance <= 300)
+      {
+        timedDrive(-1, 0.6, 1, false, false);
+      }
+      timedDrive(-0.5, 0.6, 5, true, false);   
+      //직진
+      timedDrive(0, 0.5, 3, true, 0);
+      //우회전
+      timedDrive(1, 0.6, 10, true, false);
     }
 
 
@@ -53,13 +72,13 @@ void avoidence()
     if(gbLeftIR != detect_ir)
     {
       compute_steering = 1;
-      compute_speed = compute_speed * 0.4;
+      compute_speed = 0.2;
       finishedMission = true;
     } 
     else if(gbRightIR != detect_ir)
     {
       compute_steering = -1;
-      compute_speed = compute_speed * 0.4;
+      compute_speed = 0.2;
     }
 
     nextMove();
