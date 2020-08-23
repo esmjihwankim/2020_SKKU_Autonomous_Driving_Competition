@@ -11,7 +11,6 @@
  */
 
 
-
 inline void proceedMission()
 {
   switch(iStageNumber)
@@ -37,7 +36,7 @@ inline void proceedMission()
         break;
       
       case 5: 
-        HM10.write("#500 Impediment Avoidence\n");
+        HM10.write("#500 Avoidence\n");
         avoidence();
         break;
 

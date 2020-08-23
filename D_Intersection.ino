@@ -13,7 +13,7 @@
 
 
 void intersection(bool recognizeLine){
-  timedStop(15);
-  timedDrive(0, 0.4, 2, recognizeLine, false);
+  timedStop(10);
+  timedDrive(0, 0.4, 1, recognizeLine, false);
   timedDrive(0, 0.4, 10, true, false);
 }

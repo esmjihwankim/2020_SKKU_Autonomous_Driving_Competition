@@ -123,7 +123,7 @@ void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance)
 }
 
 
-void reverse(bool bSenseIR)
+void reverse(bool bWillSenseIR, bool bWillSenseUltrasonic)
 {
   setTimer();
 
@@ -133,17 +133,21 @@ void reverse(bool bSenseIR)
     compute_steering = 0;
     compute_speed = -0.4;
 
-    //when car too close to wall during parking
-    if(gfLeftDistance < 100 && gfRightDistance > 100)
+    if(bWillSenseUltrasonic == true)
     {
-      compute_steering = 1;
-    }
-    else if(gfLeftDistance > 100 && gfRightDistance < 100)
-    {
-      compute_steering = -1;
+      //when car too close to wall during parking
+      if(gfLeftDistance < 100 && gfRightDistance > 100)
+      {
+        compute_steering = 1;
+      }
+      
+      else if(gfLeftDistance > 100 && gfRightDistance < 100)
+      {
+        compute_steering = -1;
+      }
     }
 
-    if(bSenseIR == true) 
+    if(bWillSenseIR == true) 
     {
       //when line sensed
       if(gbLeftIR != detect_ir)

@@ -31,7 +31,7 @@ void backwardParking(){
   //후진 -- IR센서가 정지선 읽을 때까지
   HM10.write("---Reverse\n");
   timedDrive(0, -1, 10, false, false);
-  reverse(false);
+  reverse(false, false);
 
   //정지
   timedStop(15);
