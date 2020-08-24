@@ -44,7 +44,7 @@ inline void proceedMission()
         HM10.write("#600 Finish Line\n");  
         timedStop(2000);
         break;
-        
+                
       default:
         HM10.write("#Error:Unidentified Course Location\n");
         break;

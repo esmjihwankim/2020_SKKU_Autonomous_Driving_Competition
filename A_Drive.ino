@@ -6,8 +6,21 @@ inline void drive()
 
   sense();
 
+  //양쪽 차선 모두 검출
+  if (gbRightIR != detect_ir && gbLeftIR != detect_ir){
+    compute_steering = 0;
+    compute_speed = 0;
+    nextMove();
+    
+    //Course Mission
+    HM10.write("***Increasing Stage Number\n");
+    iStageNumber++;
+    proceedMission();   //Course.ino
+  }
+
+
   //전방 물체 15cm 이내 거리에 있을 시 정지 
-  if(gfCenterDistance <= 100) {
+  if(gfCenterDistance <= 150) {
     compute_steering = 0;
     compute_speed = 0;  
   }
@@ -16,14 +29,6 @@ inline void drive()
   else if(gbRightIR == detect_ir && gbLeftIR == detect_ir) {
     compute_steering = 0;
     compute_speed = 1; 
-  }
-
-  //양쪽 차선 모두 검출
-  else if (gbRightIR != detect_ir && gbLeftIR != detect_ir){
-    //Course Mission
-    HM10.write("***Increasing Stage Number\n");
-    iStageNumber++;
-    proceedMission();   //Course.ino
   }
 
   //오른쪽 차선 검출

@@ -21,7 +21,7 @@ inline void setTimer()
 {
   iTimeCount = 0;
   bInMission = true;
-  MsTimer2::set(100, sense); //100ms period
+  MsTimer2::set(100, sense); //100us period
   MsTimer2::start();
 }
 
@@ -49,18 +49,26 @@ void timedStop(int specifiedTime)
 }
 
 
-//Drives for a designated amount of time 
-//with response to IR sensors included
-inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool senseLine, bool senseStop)
+
+
+//정해진 시간동안 주행하며 센서와 물체간 거리 유지 - 초음파센서 값 필요 없으면 ultrasonicSensor = 0 으로 설정
+//Drives for a designated amount of time. Response to ultrasonic and IR sensors included
+//ultrasonic sensor ==>    -1 : Left, 0 : Center, 1 : Right, null : none
+inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, int sensorPosition, bool senseLine)
 {
   setTimer(); 
-  
+  int specifiedDistance = 100;
+
+  //주어진 시간동안 함수 실행
   while(iTimeCount <= specifiedTime)
   {
     compute_steering = rightLeft;
     compute_speed = forwardBack;
 
-    
+    //거리두기
+    calibrate(sensorPosition);
+
+    //IR센서를 이용해 라인 벗어나지 않도록
     if(senseLine == true) 
     {
       if(gbLeftIR != detect_ir)
@@ -75,12 +83,6 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool
       }
 
     }
-
-    if(senseStop == true){
-      if(gbLeftIR != detect_ir && gbRightIR != detect_ir){
-        break;
-      }
-    }
     
     nextMove();
   }
@@ -89,64 +91,109 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool
 }
 
 
-//when parking using ultrasonic sensor 
-void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance)
+
+
+//특정 센서가 정해진 거리에 닿으면 정지
+//when parking using ultrasonic sensor
+//ultrasonicSensor::: -1 : Left
+void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, int sensorPosition)
 {
   setTimer();
-  
-  //move until the right sensor becomes close to the wall
-  while (gfRightDistance > specifiedDistance)
-  {
-    compute_steering = rightLeft;
-    compute_speed = forwardBack;
 
-    //when imepediment placed in front
-    if(gfCenterDistance < 300)
+  if(sensorPosition == -1)
+  {
+    //move until the right sensor becomes close to the wall
+    while (gfLeftDistance > specifiedDistance)
     {
-      compute_steering = -1;
+      compute_steering = rightLeft;
+      compute_speed = forwardBack;
+   
+      //when line sensed
+      if(gbLeftIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = 1;
+      } 
+      else if(gbRightIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = -1;
+      }
+      
+      nextMove();
     }
- 
-    //when line sensed
-    if(gbLeftIR != detect_ir)
+   
+  }
+  else if(sensorPosition == 0)
+  {
+    //move until the right sensor becomes close to the wall
+    while (gfCenterDistance > specifiedDistance)
     {
-      compute_steering = 1;
-    } 
-    else if(gbRightIR != detect_ir)
-    {
-      compute_steering = -1;
+      compute_steering = rightLeft;
+      compute_speed = forwardBack;
+   
+      //when line sensed
+      if(gbLeftIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = 1;
+      } 
+      else if(gbRightIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = -1;
+      }
+      
+      nextMove();
     }
     
-    nextMove();
   }
-
+  
+  else if(sensorPosition == 1)
+  {
+    //move until the right sensor becomes close to the wall
+    while (gfRightDistance > specifiedDistance)
+    {
+      compute_steering = rightLeft;
+      compute_speed = forwardBack;
+   
+      //when line sensed
+      if(gbLeftIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = 1;
+      } 
+      else if(gbRightIR != detect_ir)
+      {
+        compute_speed = forwardBack;
+        compute_steering = -1;
+      }
+      
+      nextMove();
+    }
+    
+  }
+  
   stopTimer();
 }
 
 
-void reverse(bool bWillSenseIR, bool bWillSenseUltrasonic)
+//후진 로직 
+void reverse(bool bWillSenseIR, int sensorPosition)
 {
   setTimer();
 
+  //정지선 다다를때까지 후진
   //move backwards until line is sensed by both sensors
   while(gbLeftIR == detect_ir || gbRightIR == detect_ir)
   {
     compute_steering = 0;
-    compute_speed = -0.4;
+    compute_speed = -0.4; 
 
-    if(bWillSenseUltrasonic == true)
-    {
-      //when car too close to wall during parking
-      if(gfLeftDistance < 100 && gfRightDistance > 100)
-      {
-        compute_steering = 1;
-      }
-      
-      else if(gfLeftDistance > 100 && gfRightDistance < 100)
-      {
-        compute_steering = -1;
-      }
-    }
-
+    //초음파센서 값 읽어 후진할 때 거리 유지 
+    //오차범위 +- 1cm 
+    calibrate(sensorPosition);
+    
     if(bWillSenseIR == true) 
     {
       //when line sensed
@@ -158,13 +205,9 @@ void reverse(bool bWillSenseIR, bool bWillSenseUltrasonic)
       {
         compute_steering = -1;
       }
+      
     }
 
-    
-    //when the car is parked and left and right ultrasonic sensors ar sensing less than 15cm
-    if(gfLeftDistance < 200 && gfRightDistance < 200 || gbLeftIR != detect_ir && gbRightIR != detect_ir){
-      break;
-    }
     nextMove();
   }
   

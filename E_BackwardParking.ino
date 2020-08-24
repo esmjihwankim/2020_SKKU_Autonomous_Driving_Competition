@@ -1,8 +1,9 @@
 /* 후진주지
  * Used Functions:
- * void timedStop(int specifiedTime)
- * void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool enableIR)
- * void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
+void timedStop(int specifiedTime)
+inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, int ultrasonicSensor, bool senseLine)
+void distancedDrive(int rightLeft, float forwardBack, int ultrasonicValue, int specifiedDistance)
+void reverse(bool bWillSenseIR, int ultrasonicSensor)
  * 
  * Remember 
  * forwardBack == 1 -> 100% speed in forward direction
@@ -16,27 +17,26 @@ void backwardParking(){
   //정지 1.5 sec 
   timedStop(15);
 
-  //직진
-  HM10.write("---Going Forward\n");
-  timedDrive(0, 0.5, 10, true, true);
+  //직진 //gfCenterDistance
+  HM10.write("---Going Forward\n"); 
+  distancedDrive(0, 0.5, 50, 0);
 
   //우회전 후진
   HM10.write("---Right - back\n");
-  timedDrive(1, -0.8, 6, false, false);
+  timedDrive(1, -0.8, 6, NULL, false);
   
   //천천히 좌회전
   HM10.write("---Left - Forward\n");
-  timedDrive(-1, 1, 10, false, false);
+  distancedDrive(-1, 0.5, 150, 1);
   
   //후진 -- IR센서가 정지선 읽을 때까지
   HM10.write("---Reverse\n");
-  timedDrive(0, -1, 10, false, false);
-  reverse(false, false);
+  reverse(true, 1);
 
   //정지
-  timedStop(15);
+  timedStop(10);
 
   //출발
-  timedDrive(0, 1, 10, true, false);
+  timedDrive(0, 1, 10, 1, false);
   
 }

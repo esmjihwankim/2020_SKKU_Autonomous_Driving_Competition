@@ -1,9 +1,10 @@
 /* 교차로
  *  
  * Used Functions:
- * void timedStop(int specifiedTime)
- * void timedDrive(int rightLeft, float forwardBack, int specifiedTime, bool enableIR)
- * void park(int rightLeft, float forwardBack, int specifiedDistance, bool enableIR)
+void timedStop(int specifiedTime)
+inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, int ultrasonicSensor, bool senseLine)
+void distancedDrive(int rightLeft, float forwardBack, int ultrasonicValue, int specifiedDistance)
+void reverse(bool bWillSenseIR, int ultrasonicSensor)
  * 
  * Remember 
  * forwardBack == 1 -> 100% speed in forward direction
@@ -12,8 +13,9 @@
  */
 
 
-void intersection(bool recognizeLine){
+void intersection(bool willSenseLine)
+{
   timedStop(10);
-  timedDrive(0, 0.4, 1, recognizeLine, false);
-  timedDrive(0, 0.4, 10, true, false);
+  timedDrive(0, 0.4, 1, NULL, willSenseLine);
+  timedDrive(0, 0.4, 10, NULL, true);
 }
