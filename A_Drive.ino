@@ -19,8 +19,8 @@ inline void drive()
   }
 
 
-  //전방 물체 15cm 이내 거리에 있을 시 정지 
-  if(gfCenterDistance <= 150) {
+  //전방 물체 10cm 이내 거리에 있을 시 정지 
+  if(gfCenterDistance <= 100) {
     compute_steering = 0;
     compute_speed = 0;  
   }

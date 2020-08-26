@@ -22,25 +22,28 @@ void parallelParking()
   //정지 1초
   timedStop(10);
 
-  //센싱 없이 0.3s 주행 
-  timedDrive(0, 1, 5, NULL, true);
+  //벽 등장할때까지 직진 
+  distancedDrive(0, 1, 200, -1);
+  
+  
 
-  //왼쪽 초음파센서로 거리 유지하며 1s 주행
-  timedDrive(0, 0.4, 12, -1, false);
+  //왼쪽 초음파센서로 거리 유지하며 2.5s 주행
+  HM10.write("---timedDrive straight for 1.2s\n");
+  timedDrive(0, 0.5, 25, -1, false);
 
   //우회전, 후진
-  timedDrive(1, -0.8, 10, NULL, false);
+  timedDrive(0.5, -0.8, 10, NULL, false);
 
-  //좌회전, 후진 :: 오른쪽 센서가 15cm 이하의 값을 읽을때까지
-  distancedDrive(-1, -1, 150, 1);
+  //좌회전, 후진 :: 오른쪽 센서가 10cm 이하의 값을 읽을때까지
+  distancedDrive(-1, -0.5, 100, 1);
 
   //정지
   timedStop(10); 
   
   //좌회전, 주차장 탈출
-  timedDrive(-1, 0.4, 6, NULL, false);
+  timedDrive(-0.5, 0.4, 6, NULL, false);
 
   //우회전, 탈출
-  timedDrive(1, 0.4, 3, NULL, true);
+  timedDrive(0.5, 0.4, 3, NULL, true);
 
 }

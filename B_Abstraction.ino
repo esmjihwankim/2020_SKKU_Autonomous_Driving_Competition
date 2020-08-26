@@ -54,11 +54,10 @@ void timedStop(int specifiedTime)
 //정해진 시간동안 주행하며 센서와 물체간 거리 유지 - 초음파센서 값 필요 없으면 ultrasonicSensor = 0 으로 설정
 //Drives for a designated amount of time. Response to ultrasonic and IR sensors included
 //ultrasonic sensor ==>    -1 : Left, 0 : Center, 1 : Right, null : none
-inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, int sensorPosition, bool senseLine)
+inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, int sensorPosition, bool senseLine)
 {
   setTimer(); 
-  int specifiedDistance = 100;
-
+  
   //주어진 시간동안 함수 실행
   while(iTimeCount <= specifiedTime)
   {
@@ -96,7 +95,7 @@ inline void timedDrive(int rightLeft, float forwardBack, int specifiedTime, int 
 //특정 센서가 정해진 거리에 닿으면 정지
 //when parking using ultrasonic sensor
 //ultrasonicSensor::: -1 : Left
-void distancedDrive(int rightLeft, float forwardBack, int specifiedDistance, int sensorPosition)
+void distancedDrive(float rightLeft, float forwardBack, int specifiedDistance, int sensorPosition)
 {
   setTimer();
 

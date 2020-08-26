@@ -16,7 +16,7 @@
 
 void avoidence()
 {
-  timedStop(15);
+  timedStop(10);
   
   //센싱
   sense();
@@ -29,12 +29,7 @@ void avoidence()
     timedDrive(1, -1, 4, NULL, false);
       
     //좌회전
-    while(gfCenterDistance <= 200)
-    {
-      sense();
-      timedDrive(-1, 0.6, 1, NULL, false);
-    }
-    timedDrive(-1, 0.6, 2, NULL, false);
+    timedDrive(-1, 0.6, 5, NULL, false);
 
     //직진
     timedDrive(0, 0.4, 3, NULL, false);
@@ -49,16 +44,9 @@ void avoidence()
     HM10.write("---Object 30cm in front\n");
 
     //좌회전
-    while(gfCenterDistance <= 300)
-    {
-       timedDrive(-1, 0.6, 1, NULL, false);
-    }
-    timedDrive(-1, 0.6, 2, NULL, false);   
+    timedDrive(-1, 0.6, 5, NULL, false);   
     //직진
     timedDrive(0, 0.5, 3, NULL, false);
-
-    //우회전 - 방향잡기
-    timedDrive(1, 0.5, 3, NULL, false);
     
   }  
   //장애물 전방에 센싱되지 않음 || 멀리 있음  
@@ -67,7 +55,6 @@ void avoidence()
     HM10.write("---Object Not detected/far away\n");
     timedDrive(-1, 0.6, 4, NULL, false);
     timedDrive(0, 0.6, 2, NULL, false);
-    timedDrive(1, 0.6, 2, NULL, false);
   }
 
   
