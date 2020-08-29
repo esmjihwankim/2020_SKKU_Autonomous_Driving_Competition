@@ -36,7 +36,7 @@ inline void calibrate(int sensorPosition)
   }
 }
 
-inline void correctDirection()
+inline void correctStoplineDirection()
 {
   
 }
