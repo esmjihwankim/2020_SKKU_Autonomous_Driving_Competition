@@ -5,7 +5,7 @@
  
 inline void calibrate(int sensorPosition)
 {
-  int specifiedDistance = 140;
+  int specifiedDistance = 110;
   int errorRange = 0;
   float steer = 0.1;
   
@@ -21,12 +21,6 @@ inline void calibrate(int sensorPosition)
       compute_steering = steer;
     }
   }
-
-  //전방
-  else if (sensorPosition == 0)
-  {
-    
-  }
   
   //우측
   else if (sensorPosition == 1)
@@ -40,5 +34,9 @@ inline void calibrate(int sensorPosition)
       compute_steering = -steer;
     }
   }
+}
 
+inline void correctDirection()
+{
+  
 }

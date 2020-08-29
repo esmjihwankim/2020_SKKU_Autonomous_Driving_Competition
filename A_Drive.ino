@@ -4,13 +4,41 @@ inline void drive()
   compute_steering = cur_steering;
   compute_speed = cur_speed; 
 
+  //모든 센서 센싱
   sense();
 
+  //전방 물체 10cm 이내 거리에 있을 시 정지 
+  if(gfCenterDistance <= 100) 
+  {
+    compute_steering = 0;
+    compute_speed = 0;  
+  }
+
+  //양쪽 차선 모두 검출되지 않음
+  else if(gbRightIR == detect_ir && gbLeftIR == detect_ir)
+  {
+    giRightIRCnt = 0; giLeftIRCnt = 0;
+    compute_steering = 0;
+    compute_speed = 1; 
+  }
+  
   //양쪽 차선 모두 검출
-  if (gbRightIR != detect_ir && gbLeftIR != detect_ir){
+  else if (gbRightIR != detect_ir && gbLeftIR != detect_ir)
+  {
     compute_steering = 0;
     compute_speed = 0;
-    nextMove();
+    
+    if(abs(giRightIRCnt) > abs(giLeftIRCnt)) //오른쪽이 먼저 들어갔을 때 시간차와 조향 계산
+      giIRDifference = -1 * (giRightIRCnt - giLeftIRCnt);
+    else //왼쪽이 먼저 들어갔을때 
+      giIRDifference = giLeftIRCnt - giRightIRCnt;
+
+    Serial.print("giIRDifference:::");
+    Serial.println(giIRDifference);
+    HM10.write("giIRDifference:::");
+    HM10.print(giIRDifference); 
+    HM10.write("\n");
+    delay(5);
     
     //Course Mission
     HM10.write("***Increasing Stage Number\n");
@@ -18,32 +46,25 @@ inline void drive()
     proceedMission();   //Course.ino
   }
 
-
-  //전방 물체 10cm 이내 거리에 있을 시 정지 
-  if(gfCenterDistance <= 100) {
-    compute_steering = 0;
-    compute_speed = 0;  
-  }
-
-  //양쪽 차선 모두 검출되지 않음
-  else if(gbRightIR == detect_ir && gbLeftIR == detect_ir) {
-    compute_steering = 0;
-    compute_speed = 1; 
-  }
-
   //오른쪽 차선 검출
-  else if(gbRightIR != detect_ir) {
-    compute_steering = -1;
-    compute_speed = 0.2;
+  else if(gbRightIR != detect_ir) 
+  { 
+    giRightIRCnt = giRightIRCnt + 0.02; 
+    compute_steering = -giRightIRCnt;
+    compute_speed = 0.1;
   }
 
   //왼쪽 차선 검출
-  else if(gbLeftIR != detect_ir) {
-    compute_steering = 1;
-    compute_speed = 0.2;
+  else if(gbLeftIR != detect_ir) 
+  { 
+    giLeftIRCnt = giLeftIRCnt + 0.02;
+    compute_steering = giLeftIRCnt;
+    compute_speed = 0.1;
   }
 
   nextMove(); 
+  Serial.print(giRightIRCnt);
+  Serial.println();
 }
 
 

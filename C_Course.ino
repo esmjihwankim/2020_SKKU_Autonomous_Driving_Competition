@@ -22,12 +22,16 @@ inline void proceedMission()
 
       case 2:
         HM10.write("#200 Intersection 1\n");
-        intersection(false);
+        timedStop(10);
+        timedDrive(0, 0.1, 1, NULL, true);
+        timedDrive(0, 0.1, 10, NULL, true);
         break;
 
       case 3: 
         HM10.write("#300 Intersection 2\n");
-        intersection(false);
+        timedStop(10);
+        timedDrive(0, 0.1, 1, NULL, false);
+        timedDrive(0, 0.1, 10, NULL, true);
         break;
 
       case 4:

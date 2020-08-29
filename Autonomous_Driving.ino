@@ -22,6 +22,10 @@ float gfRightDistance;
 bool gbLeftIR;
 bool gbRightIR;
 
+float giRightIRCnt = 0; 
+float giLeftIRCnt = 0;
+float giIRDifference = 0;
+
 bool bInMission = false;
 int iStageNumber = 0;
 unsigned int iTimeCount = 0; //timer 시간 :: MsTimer2는 miliseconds 단위 
@@ -50,4 +54,5 @@ void setup() {
 void loop() 
 {
   drive();    //Drive 
+
 }
