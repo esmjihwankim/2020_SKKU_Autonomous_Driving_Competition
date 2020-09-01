@@ -11,18 +11,19 @@
  */
 
 
-inline void proceedMission()
+inline void proceedMission(float timeDifference)
 {
   switch(iStageNumber)
   {
       case 1:
         HM10.write("#100 Parallel Parking\n");
-        parallelParking();
+        parallelParking(timeDifference);
         break;
 
       case 2:
         HM10.write("#200 Intersection 1\n");
         timedStop(10);
+        correctStoplineDirection(timeDifference, 0.5, 1);
         timedDrive(0, 0.1, 1, NULL, true);
         timedDrive(0, 0.1, 10, NULL, true);
         break;
@@ -30,13 +31,14 @@ inline void proceedMission()
       case 3: 
         HM10.write("#300 Intersection 2\n");
         timedStop(10);
+        correctStoplineDirection(timeDifference, 0.5, 1);
         timedDrive(0, 0.1, 1, NULL, false);
         timedDrive(0, 0.1, 10, NULL, true);
         break;
 
       case 4:
         HM10.write("#400 Backward Parking\n");
-        backwardParking();
+        backwardParking(timeDifference);
         break;
       
       case 5: 

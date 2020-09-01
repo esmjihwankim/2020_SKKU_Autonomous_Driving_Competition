@@ -12,17 +12,19 @@ void reverse(bool bWillSenseIR, int ultrasonicSensor)
  */
 
 
-void backwardParking()
+void backwardParking(float timeDifference)
 {
   
   //정지 1.0 sec 
   timedStop(10);
+  //정지선 평형 보정
+  correctStoplineDirection(timeDifference, 0.5, 1);
   
   HM10.write("---Going Forward\n"); 
   //초음파센서 리딩 무시하고 직진
   timedDrive(0, 1, 3, NULL, true); 
   //전방 초음파센서 리딩 후 직진
-  distancedDrive(0, 0.6, 200, 0); //310
+  distancedDrive(0, 0.6, 0, true, 200); //310
   timedStop(10);
   
   //천천히 좌회전

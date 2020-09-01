@@ -54,24 +54,13 @@ inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, in
     compute_speed = forwardBack;
 
     //거리두기
-    calibrate(sensorPosition);
+    calibrate(sensorPosition, 100);
 
     //IR센서를 이용해 라인 벗어나지 않도록
     if(senseLine == true) 
     {
-      if(gbLeftIR != detect_ir)
-      {
-        compute_speed = forwardBack;
-        compute_steering = giRightIRCnt;
-      }
-      else if(gbRightIR != detect_ir)
-      {
-        compute_speed = forwardBack;
-        compute_steering = -giRightIRCnt;
-      }
-
-    }
-    
+      lineSensed();
+    }   
     nextMove();
   }
   
@@ -79,17 +68,18 @@ inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, in
 }
 
 
-
 //특정 센서가 정해진 거리에 닿으면 정지
 //when parking using ultrasonic sensor
 //ultrasonicSensor::: -1 : Left
-void distancedDrive(float rightLeft, float forwardBack, int specifiedDistance, int sensorPosition)
+//closerThan::: True : closer than specified position -> stops vehicle 
+//              False : Further than specified Position -> stops vehicle
+void distancedDrive(float rightLeft, float forwardBack, int sensorPosition, bool untilCloser, int specifiedDistance)
 {
   setTimer();
   int distance = 1000; 
 
-  //move until the right sensor becomes close to the wall
-  while (distance > specifiedDistance)
+  //move until specified distance
+  while (1)
   {
     if(sensorPosition == -1) distance = gfLeftDistance;
     else if(sensorPosition == 0) distance = gfCenterDistance;
@@ -97,18 +87,23 @@ void distancedDrive(float rightLeft, float forwardBack, int specifiedDistance, i
     
     compute_steering = rightLeft;
     compute_speed = forwardBack;
+
+    if(untilCloser == true)
+    {
+      if(distance < specifiedDistance) 
+        break;
+    }
+
+    else
+    {
+      if(distance > specifiedDistance) 
+        break;
+    }
+
+    calibrate(sensorPosition * -1, 110);
     
     //when line sensed
-    if(gbLeftIR != detect_ir)
-    {
-      compute_speed = forwardBack;
-      compute_steering = 1;
-    } 
-    else if(gbRightIR != detect_ir)
-    {
-      compute_speed = forwardBack;
-      compute_steering = -1;
-    }
+    lineSensed();
     
     nextMove();
   }
@@ -131,21 +126,13 @@ void reverse(bool bWillSenseIR, int sensorPosition)
     compute_speed = -0.4; 
 
     //초음파센서 값 읽어 후진할 때 거리 유지 
-    //오차범위 +- 1cm 
-    calibrate(sensorPosition);
-
+    calibrate(sensorPosition, 120);
+    
     //선 밟았을 때
     if(bWillSenseIR == true) 
     {
-      //when line sensed
-      if(gbLeftIR != detect_ir)
-      {
-        compute_steering = 1;
-      } 
-      else if(gbRightIR != detect_ir)
-      {
-        compute_steering = -1;
-      }
+     //when line sensed
+     lineSensed();
     }
 
     //주차장 벽 양쪽 센싱 
@@ -165,7 +152,6 @@ void reverse(bool bWillSenseIR, int sensorPosition)
     
     nextMove();
   }
-  
   
   stopTimer();
 }

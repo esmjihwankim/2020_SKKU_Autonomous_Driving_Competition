@@ -19,12 +19,8 @@ float gfCenterDistance;
 float gfLeftDistance;
 float gfRightDistance;
 
-bool gbLeftIR;
-bool gbRightIR;
-
-float giRightIRCnt = 0; 
-float giLeftIRCnt = 0;
-float giIRDifference = 0;
+bool gbLeftIR; bool gbRightIR;
+float giRightIRCnt = 0; float giLeftIRCnt = 0; float giIRDifference = 0;
 
 bool bInMission = false;
 int iStageNumber = 0;
@@ -32,7 +28,7 @@ unsigned int iTimeCount = 0; //timer 시간 :: MsTimer2는 miliseconds 단위
 
 
 // 자동차 튜닝 파라미터 =====================================================================
-bool detect_ir = true; // 검출선이 흰색 = true, 검정색 = false
+const bool detect_ir = true; // 검출선이 흰색 = true, 검정색 = false
 
 float cur_steering = 0;
 float cur_speed = 0;
@@ -53,6 +49,5 @@ void setup() {
 
 void loop() 
 {
-  drive();    //Drive 
-
+  drive();    
 }
