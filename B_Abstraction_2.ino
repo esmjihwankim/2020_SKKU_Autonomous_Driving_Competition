@@ -28,18 +28,17 @@ inline void lineSensed()
 }
 
 
-//차량이 회전할 때 센싱을 통해 벽과 거리를 유지하게 함.
-inline void sensedTurn(int rightLeft, int specifiedTime)
+//차가 도로상에서 기울어있는지 확인하는 함수 
+inline int checkTilt()
 {
+  
+  //how much the vehicle is tilted on the road 
+
   
 }
 
-
-
-//차가 도로상에서 기울어있는지 확인하는 함수 
-inline int checkPositionOnRoad(int iaPosition[30])
+//차량이 회전할 때 센싱을 통해 벽과 거리를 유지하게 함.
+inline void sensedTurn(int rightLeft, int specifiedTime)
 {
-  //how much the vehicle is tilted on the road 
-
   
 }

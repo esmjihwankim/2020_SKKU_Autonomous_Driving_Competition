@@ -76,27 +76,26 @@ inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, in
 void distancedDrive(float rightLeft, float forwardBack, int sensorPosition, bool untilCloser, int specifiedDistance)
 {
   setTimer();
-  int distance = 1000; 
-
+  int stopDistance = 1000;  
+  
   //move until specified distance
   while (1)
   {
-    if(sensorPosition == -1) distance = gfLeftDistance;
-    else if(sensorPosition == 0) distance = gfCenterDistance;
-    else if(sensorPosition == 1) distance = gfRightDistance;
+    if(sensorPosition == -1) stopDistance = gfLeftDistance;
+    else if(sensorPosition == 0) stopDistance = gfCenterDistance;
+    else if(sensorPosition == 1) stopDistance = gfRightDistance;
     
     compute_steering = rightLeft;
     compute_speed = forwardBack;
 
     if(untilCloser == true)
     {
-      if(distance < specifiedDistance) 
+      if(stopDistance < specifiedDistance) 
         break;
     }
-
-    else
+    else //until further
     {
-      if(distance > specifiedDistance) 
+      if(stopDistance > specifiedDistance) 
         break;
     }
 
@@ -104,6 +103,11 @@ void distancedDrive(float rightLeft, float forwardBack, int sensorPosition, bool
     
     //when line sensed
     lineSensed();
+
+//    //Obtain array containing slope information
+//    faLeftSlope[cnt] = gfLeftDistance;
+//    faRightSlope[cnt] = gfRightDistance;
+//    cnt++;
     
     nextMove();
   }

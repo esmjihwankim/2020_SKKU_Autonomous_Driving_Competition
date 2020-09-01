@@ -48,22 +48,61 @@ void parallelParking(float timeDifference)
   timedStop(5);
 
   //전방 초음파센서 센싱 후, 25cm 거리보다 가까우면 후진
-  if(gfCenterDistance <= 250)
-  {
+  if(gfRightDistance >= 50 && gfRightDistance <= 150 && gfCenterDistance <= 250)
+  { 
     HM10.write("---finalize Parking:::too far from wall");
     timedDrive(0, -0.8, 2, NULL, false);
+  } 
+  else if(gfLeftDistance <= 300) //주차선에서 벗어났을 때
+  {
+    timedDrive(-0.3, 0.5, 10, NULL, true);
+    timedStop(5);
+    timedDrive(0.6, -0.5, 2, NULL, true);
+    timedStop(5);
+    timedDrive(-1, -0.6, 8, NULL, true);
   }
 
   //정지
   timedStop(10);   
+
+
+  //탈출로직 
+  if(gfRightDistance < 100) //close to right 
+  {
+    //좌회전, 주차장 탈출 
+    timedDrive(-0.8, 0.8, 6, NULL, false);
+    //직진
+    timedDrive(0, 0.2, 1, NULL, false);
+    //우회전, 탈출
+    timedDrive(0.5, 0.2, 5, NULL, true);
+    //천천히 직진
+    timedDrive(0, 0.2, 10, NULL, true);
+  }
+  else if(gfRightDistance > 150) //far from right
+  {
+    //좌회전, 주차장 탈출 
+    timedDrive(-0.5, 0.8, 3, NULL, false);
+    //직진
+    timedDrive(0, 0.2, 1, NULL, false);
+    //우회전, 탈출
+    timedDrive(0.3, 0.2, 2, NULL, true);
+    //천천히 직진
+    timedDrive(0, 0.2, 10, NULL, true);
+  }
   
-  //좌회전, 주차장 탈출
-  timedDrive(-0.5, 0.8, 4, NULL, false);
-
-  //직진
-  timedDrive(0, 0.8, 1, NULL, false);
-
-  //우회전, 탈출
-  timedDrive(0.5, 0.8, 1, NULL, true);
-
+  else
+  {
+    //좌회전, 주차장 탈출
+    timedDrive(-0.5, 0.8, 6, NULL, false);
+  
+    //직진
+    timedDrive(0, 0.2, 1, NULL, false);
+  
+    //우회전, 탈출
+    timedDrive(0.3, 0.2, 4, NULL, true);
+  
+    //천천히 직진
+    timedDrive(0, 0.2, 10, NULL, true);
+  }
+  
 }

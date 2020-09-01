@@ -7,17 +7,16 @@
 inline void calibrate(int sensorPosition, int distance)
 {
   int specifiedDistance = distance;
-  int errorRange = 0;
   float steer = 0.1;
   
   //좌측
   if(sensorPosition == -1)
-  {
-    if(gfLeftDistance > specifiedDistance + errorRange)
+  {    
+    if(gfLeftDistance > specifiedDistance)
     {
       compute_steering = -steer;
-    }
-    else if (gfLeftDistance < specifiedDistance - errorRange)
+    } 
+    else if (gfLeftDistance < specifiedDistance)
     {
       compute_steering = steer;
     }
@@ -26,11 +25,11 @@ inline void calibrate(int sensorPosition, int distance)
   //우측
   else if (sensorPosition == 1)
   {
-    if(gfRightDistance > specifiedDistance + errorRange)
+    if(gfRightDistance > specifiedDistance)
     {
       compute_steering = steer;
     }
-    else if (gfRightDistance < specifiedDistance - errorRange)
+    else if (gfRightDistance < specifiedDistance)
     {
       compute_steering = -steer;
     }
