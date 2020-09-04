@@ -43,7 +43,7 @@ void timedStop(int specifiedTime)
 //정해진 시간동안 주행하며 센서와 물체간 거리 유지 - 초음파센서 값 필요 없으면 ultrasonicSensor = 0 으로 설정
 //Drives for a designated amount of time. Response to ultrasonic and IR sensors included
 //ultrasonic sensor ==>    -1 : Left, 0 : Center, 1 : Right, null : none
-inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, int sensorPosition, bool senseLine)
+inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, int sensorPosition, bool senseLine, int caliConstant)
 {
   setTimer(); 
   
@@ -54,7 +54,7 @@ inline void timedDrive(float rightLeft, float forwardBack, int specifiedTime, in
     compute_speed = forwardBack;
 
     //거리두기
-    calibrate(sensorPosition, 100);
+    calibrate(sensorPosition, caliConstant);
 
     //IR센서를 이용해 라인 벗어나지 않도록
     if(senseLine == true) 
@@ -130,7 +130,7 @@ void reverse(bool bWillSenseIR, int sensorPosition)
     compute_speed = -0.4; 
 
     //초음파센서 값 읽어 후진할 때 거리 유지 
-    calibrate(sensorPosition, 120);
+    calibrate(sensorPosition, 100);
     
     //선 밟았을 때
     if(bWillSenseIR == true) 
@@ -144,18 +144,15 @@ void reverse(bool bWillSenseIR, int sensorPosition)
     {
       parkingTimer++;
 
-      //센싱 후 약 0.5초간 더 후진 후 멈춤
-      if(parkingTimer >= 5){
+      //센싱 후 약 1.5초간 더 후진 후 멈춤
+      if(parkingTimer >= 150){
         compute_steering = 0;
         compute_speed = 0;
         nextMove();
         break;
-      }
-      
-    }
-    
+      } 
+    } 
     nextMove();
-  }
-  
+  } 
   stopTimer();
 }

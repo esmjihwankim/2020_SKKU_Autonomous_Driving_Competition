@@ -3,6 +3,31 @@
  * 초음파센서 값을 받아 10cm 거리 유지하도록 설계. +-x cm 오차범위 허용
  */
 
+ 
+inline void lineSensed()
+{
+  //오른쪽 차선 검출   
+  if(gbRightIR != detect_ir) 
+  {
+    giRightIRCnt = giRightIRCnt + 0.02; 
+    compute_steering = -giRightIRCnt;
+    compute_speed = 0.1;
+  }
+  //왼쪽 차선 검출
+  else if(gbLeftIR != detect_ir)
+  {
+    giLeftIRCnt = giLeftIRCnt + 0.02;
+    compute_steering = giLeftIRCnt;
+    compute_speed = 0.1;
+  }
+  else if(gbRightIR == detect_ir && gbLeftIR == detect_ir)
+  {
+    giLeftIRCnt = 0;
+    giRightIRCnt = 0; 
+  }
+  
+}
+
 //distancing vehicle with surrounding wall
 inline void calibrate(int sensorPosition, int distance)
 {

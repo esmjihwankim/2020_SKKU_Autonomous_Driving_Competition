@@ -38,28 +38,28 @@ void parallelParking(float timeDifference)
   distancedDrive(0, 0.6, 1, true, 200);
 
   //우회전, 후진
-  timedDrive(0.4, -0.8, 4, NULL, false);
+  timedDrive(0.4, -0.8, 4, NULL, false, NULL);
   timedStop(5);
-  timedDrive(0.5, -0.8, 5, NULL, false);
+  timedDrive(0.5, -0.8, 5, NULL, false, NULL);
   timedStop(5);
 
   //좌회전, 후진 :: Timed
-  timedDrive(-1, -0.8, 8, NULL, false);
+  timedDrive(-1, -0.8, 8, NULL, false, NULL);
   timedStop(5);
 
   //전방 초음파센서 센싱 후, 25cm 거리보다 가까우면 후진
   if(gfRightDistance >= 50 && gfRightDistance <= 150 && gfCenterDistance <= 250)
   { 
     HM10.write("---finalize Parking:::too far from wall");
-    timedDrive(0, -0.8, 2, NULL, false);
+    timedDrive(0, -0.8, 2, NULL, false, NULL);
   } 
   else if(gfLeftDistance <= 300) //주차선에서 벗어났을 때
   {
-    timedDrive(-0.3, 0.5, 10, NULL, true);
+    timedDrive(-0.3, 0.5, 10, NULL, true, NULL);
     timedStop(5);
-    timedDrive(0.6, -0.5, 2, NULL, true);
+    timedDrive(0.6, -0.5, 2, NULL, true, NULL);
     timedStop(5);
-    timedDrive(-1, -0.6, 8, NULL, true);
+    timedDrive(-1, -0.6, 8, NULL, true, NULL);
   }
 
   //정지
@@ -70,39 +70,39 @@ void parallelParking(float timeDifference)
   if(gfRightDistance < 100) //close to right 
   {
     //좌회전, 주차장 탈출 
-    timedDrive(-0.8, 0.8, 6, NULL, false);
+    timedDrive(-0.8, 0.8, 6, NULL, false, NULL);
     //직진
-    timedDrive(0, 0.2, 1, NULL, false);
+    timedDrive(0, 0.2, 1, NULL, false, NULL);
     //우회전, 탈출
-    timedDrive(0.5, 0.2, 5, NULL, true);
+    timedDrive(0.5, 0.2, 5, NULL, true, NULL);
     //천천히 직진
-    timedDrive(0, 0.2, 10, NULL, true);
+    timedDrive(0, 0.2, 10, NULL, true, NULL);
   }
   else if(gfRightDistance > 150) //far from right
   {
     //좌회전, 주차장 탈출 
-    timedDrive(-0.5, 0.8, 3, NULL, false);
+    timedDrive(-0.5, 0.8, 3, NULL, false, NULL);
     //직진
-    timedDrive(0, 0.2, 1, NULL, false);
+    timedDrive(0, 0.2, 1, NULL, false, NULL);
     //우회전, 탈출
-    timedDrive(0.3, 0.2, 2, NULL, true);
+    timedDrive(0.3, 0.2, 2, NULL, true, NULL);
     //천천히 직진
-    timedDrive(0, 0.2, 10, NULL, true);
+    timedDrive(0, 0.2, 10, NULL, true, NULL);
   }
   
   else
   {
     //좌회전, 주차장 탈출
-    timedDrive(-0.5, 0.8, 6, NULL, false);
+    timedDrive(-0.5, 0.8, 6, NULL, false, NULL);
   
     //직진
-    timedDrive(0, 0.2, 1, NULL, false);
+    timedDrive(0, 0.2, 1, NULL, false, NULL);
   
     //우회전, 탈출
-    timedDrive(0.3, 0.2, 4, NULL, true);
+    timedDrive(0.3, 0.2, 4, NULL, true, NULL);
   
     //천천히 직진
-    timedDrive(0, 0.2, 10, NULL, true);
+    timedDrive(0, 0.2, 10, NULL, true, NULL);
   }
   
 }
