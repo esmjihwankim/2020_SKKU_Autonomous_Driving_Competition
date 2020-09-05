@@ -26,6 +26,8 @@ bool bInMission = false;
 int iStageNumber = 0;
 unsigned int iTimeCount = 0; //timer 시간 :: MsTimer2는 miliseconds 단위 
 
+bool finalStage = false;
+
 
 // 자동차 튜닝 파라미터 =====================================================================
 const bool detect_ir = true; // 검출선이 흰색 = true, 검정색 = false

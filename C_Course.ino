@@ -35,16 +35,16 @@ inline void proceedMission(float timeDifference)
 //        timedDrive(0, 0.1, 1, NULL, false, NULL);
 //        timedDrive(0, 0.1, 10, NULL, true, NULL);
 //        break;
-
-      case 1:
-        HM10.write("#400 Backward Parking\n");
-        backwardParking(timeDifference);
-        break;
-      
-//      case 5: 
-//        HM10.write("#500 Avoidence\n");
-//        avoidence();
+//
+//      case 4:
+//        HM10.write("#400 Backward Parking\n");
+//        backwardParking(timeDifference);
 //        break;
+      
+      case 1: 
+        HM10.write("#500 Avoidence\n");
+        avoidence();
+        break;
 //
 //      case 6:
 //        HM10.write("#600 Finish Line\n");  

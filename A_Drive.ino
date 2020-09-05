@@ -20,6 +20,8 @@ inline void drive()
     giRightIRCnt = 0; giLeftIRCnt = 0; giIRDifference = 0;
     compute_steering = 0;
     compute_speed = 1; 
+    
+    if(finalStage == true) compute_speed = 0.1;
   }
   
   //양쪽 차선 모두 검출

@@ -144,8 +144,8 @@ void reverse(bool bWillSenseIR, int sensorPosition)
     {
       parkingTimer++;
 
-      //센싱 후 약 1.5초간 더 후진 후 멈춤
-      if(parkingTimer >= 150){
+      //센싱 후 약 2초간 더 후진 후 멈춤
+      if(parkingTimer >= 2000){
         compute_steering = 0;
         compute_speed = 0;
         nextMove();

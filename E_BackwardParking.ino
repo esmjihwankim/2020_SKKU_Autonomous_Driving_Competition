@@ -15,7 +15,7 @@ void reverse(bool bWillSenseIR, int ultrasonicSensor)
 void backwardParking(float timeDifference)
 {
 
-  int state;
+  int state = 0;
   
   //정지 1.0 sec 
   timedStop(10);
@@ -24,14 +24,14 @@ void backwardParking(float timeDifference)
   
   HM10.write("---Going Forward\n"); delayMicroseconds(20);
   //초음파센서 리딩 무시하고 직진
-  timedDrive(0, 1, 3, NULL, true, NULL); 
+  timedDrive(0.1, 1, 3, NULL, true, NULL); 
   //전방 초음파센서 리딩 후 직진 - 시험주행 때 distance 값 ::: 310시험주행 때 distance 값 ::: 310
-  distancedDrive(0, 0.6, 0, true, 120); 
+  distancedDrive(0, 0.6, 0, true, 130); 
   timedStop(10);
 
 
   /* 앞에 장애물 없을 때까지 우회전-후진 + 좌회전-전진 */
-  while(gfCenterDistance < 300)
+  while(gfCenterDistance < 250)
   {
     //우회전, 후진
     HM10.write("--Right - Back\n");
@@ -39,7 +39,7 @@ void backwardParking(float timeDifference)
     timedStop(5);
 
     //뒤로 뺀 후 전방센서 거리가 지나치게 크면 -> 진입시 왼쪽벽과 충돌가능   
-    if(gfCenterDistance > 400)
+    if(gfCenterDistance > 300)
     {
       state = 1;
       break;
@@ -61,39 +61,38 @@ void backwardParking(float timeDifference)
   if(state == 0) 
   {
     HM10.write("\n--state 0::\n\n"); delayMicroseconds(25); 
-    timedDrive(-0.5, 0.1, 6, NULL, true, NULL);
+    timedDrive(0, -0.1, 4, NULL, false, NULL);
+    timedDrive(-0.9, 0.1, 10, NULL, true, NULL);
   }
   //뒤로 뺀 후 전방센서와 벽이 40cm 이상일때 
   else if(state == 1)  
   {
     HM10.write("\n--state 1::\n\n"); delayMicroseconds(25);
-    timedDrive(0, 0.1, 3, NULL, true, NULL); 
-    timedDrive(-0.4, 0.1, 6, NULL, true, NULL);
+    timedDrive(0, 0.1, 1, NULL, false, NULL); 
+    timedDrive(-1, 0.1, 10, NULL, true, NULL);
   }
 
-  timedDrive(0, 0.1, 10, 1, true, 100); 
+  timedDrive(0, 0.1, 3, 1, true, 100); 
   timedStop(5);
   
   //후진 -- IR센서가 정지선 읽을 때까지
-  if(gfRightDistance > 100)
+  if(gfRightDistance > 90)
   {
     HM10.write("---Set Direction:::Too close to right wall\n"); delayMicroseconds(25); 
-    timedDrive(0.3, -0.5, 3, NULL, false, NULL);
-    timedDrive(-0.2, -0.5, 2, NULL, false, NULL);
+    timedDrive(0.2, -0.5, 3, NULL, false, NULL); 
+    timedDrive(-0.1, -0.5, 1, NULL, false, NULL);
     timedStop(5);
   }
   else 
   {
-    HM10.write("---Set Direction:::already in appropriate position\n"); delayMicroseconds(25); 
-    timedDrive(0.3, -0.5, 3, NULL, false, NULL);
-    timedDrive(0, -0.5, 3, 1, false, 100);
+    HM10.write("---Set Direction:::already in appropriate position\n"); delayMicroseconds(25);
+    timedDrive(0, -0.5, 3, NULL, false, 90);
     timedStop(5);
   }
-
+  
   
   HM10.write("---Ignore Sensor reading and Reverse\n"); delayMicroseconds(25); 
-  timedDrive(0, -0.4, 20, 1, true, 100);
-  timedStop(5);
+  timedDrive(0, -0.5, 10, 1, false, 90);
   HM10.write("---Reverse\n"); delayMicroseconds(25); 
   reverse(false, 1);
 
@@ -101,8 +100,7 @@ void backwardParking(float timeDifference)
   timedStop(10);
 
   //출발
-  timedDrive(0.4, 0.5, 3, NULL, false, NULL);
-  timedDrive(-0.1, 0.5, 3, NULL, false, NULL);
-  timedDrive(0, 0.5, 10, 1, true, 100); 
+  timedDrive(-0.1, 0.3, 1, 1, false, 50);
+  timedDrive(0, 0.5, 15, 1, true, 50); 
   
 }
