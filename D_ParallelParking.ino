@@ -53,7 +53,7 @@ void parallelParking(float timeDifference)
     HM10.write("---finalize Parking:::too far from wall");
     timedDrive(0, -0.8, 2, NULL, false, NULL);
   } 
-  else if(gfLeftDistance <= 300) //주차선에서 벗어났을 때
+  else if(gfLeftDistance <= 300) //주차선에서 벗어났을 때 다시 주차
   {
     timedDrive(-0.3, 0.5, 10, NULL, true, NULL);
     timedStop(5);
@@ -72,7 +72,7 @@ void parallelParking(float timeDifference)
     //좌회전, 주차장 탈출 
     timedDrive(-0.8, 0.8, 6, NULL, false, NULL);
     //직진
-    timedDrive(0, 0.2, 1, NULL, false, NULL);
+    timedDrive(0, 0.2, 2, NULL, false, NULL);
     //우회전, 탈출
     timedDrive(0.5, 0.2, 5, NULL, true, NULL);
     //천천히 직진
@@ -81,11 +81,11 @@ void parallelParking(float timeDifference)
   else if(gfRightDistance > 150) //far from right
   {
     //좌회전, 주차장 탈출 
-    timedDrive(-0.5, 0.8, 3, NULL, false, NULL);
+    timedDrive(-0.5, 0.8, 4, NULL, false, NULL);
     //직진
-    timedDrive(0, 0.2, 1, NULL, false, NULL);
+    timedDrive(0, 0.2, 2, NULL, false, NULL);
     //우회전, 탈출
-    timedDrive(0.3, 0.2, 2, NULL, true, NULL);
+    timedDrive(0.3, 0.2, 1, NULL, true, NULL);
     //천천히 직진
     timedDrive(0, 0.2, 10, NULL, true, NULL);
   }

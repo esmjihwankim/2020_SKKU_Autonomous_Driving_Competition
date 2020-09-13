@@ -24,7 +24,7 @@ inline void setSteering(Servo servo, float* cur_Steering, float* nxt_Steering)
 inline void setDCSpeed(float* curSpeed, float* nxtSpeed)
 {
   //튜닝 파라미터 
-  float max_pwm = 105;
+  float max_pwm = 100;
   float min_pwm = 70;
 
   int punch_pwm = 200; // 정지 마찰력 극복 출력 (0 ~ 255)

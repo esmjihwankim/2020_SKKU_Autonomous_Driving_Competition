@@ -28,10 +28,13 @@ void avoidence()
   distancedDrive(0, 0.4, 0, true, 230);
 
   //좌회전
-  timedDrive(-0.6, 0.4, 8, NULL, true, NULL);
+  timedDrive(-0.6, 0.4, 6, NULL, true, NULL);
+
+  //직진
+  timedDrive(0, 0.4, 5, NULL, true, NULL);
 
   //보정
-  timedDrive(0.3, 0.4, 4, NULL, true, NULL);
+  timedDrive(0.3, 0.4, 3, NULL, true, NULL);
 
   //towards turning line
   timedDrive(-0.1, 0.1, 2, NULL, true, NULL); 

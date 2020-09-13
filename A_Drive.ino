@@ -17,11 +17,12 @@ inline void drive()
   //양쪽 차선 모두 검출되지 않음
   else if(gbRightIR == detect_ir && gbLeftIR == detect_ir)
   {
-    giRightIRCnt = 0; giLeftIRCnt = 0; giIRDifference = 0;
-    compute_steering = 0;
-    compute_speed = 1; 
+
+     giRightIRCnt = 0; giLeftIRCnt = 0; giIRDifference = 0;
+     compute_steering = 0;
+     compute_speed = 1; 
     
-    if(finalStage == true) compute_speed = 0.1;
+     if(finalStage == true) compute_speed = 0.1;
   }
   
   //양쪽 차선 모두 검출
@@ -31,9 +32,9 @@ inline void drive()
     compute_speed = 0;
     
     if(abs(giRightIRCnt) > abs(giLeftIRCnt)) //오른쪽이 먼저 들어갔을 때 시간차와 이에 따른 조향 계산
-      giIRDifference = -1 * (giRightIRCnt - giLeftIRCnt) / 2.0;
+      giIRDifference = (giRightIRCnt - giLeftIRCnt) / 2.0;
     else //왼쪽이 먼저 들어갔을때 
-      giIRDifference = (giLeftIRCnt - giRightIRCnt) / 2.0;
+      giIRDifference = -1 * (giLeftIRCnt - giRightIRCnt) / 2.0;
     
     Serial.print("giIRDifference:::");
     Serial.println(giIRDifference);
@@ -51,7 +52,7 @@ inline void drive()
   //차선검출
   else if(gbRightIR != detect_ir) 
   { 
-    giRightIRCnt = giRightIRCnt + 0.02; 
+    giRightIRCnt = giRightIRCnt + 0.04; 
     compute_steering = -giRightIRCnt;
     compute_speed = 0.1;
   }
@@ -59,7 +60,7 @@ inline void drive()
   //왼쪽 차선 검출
   else if(gbLeftIR != detect_ir) 
   { 
-    giLeftIRCnt = giLeftIRCnt + 0.02;
+    giLeftIRCnt = giLeftIRCnt + 0.04;
     compute_steering = giLeftIRCnt;
     compute_speed = 0.1;
   }  

@@ -15,41 +15,41 @@ inline void proceedMission(float timeDifference)
 {
   switch(iStageNumber)
   {
-//      case 1:
-//        HM10.write("#100 Parallel Parking\n");
-//        parallelParking(timeDifference);
-//        break;
-//
-//      case 2:
-//        HM10.write("#200 Intersection 1\n");
-//        timedStop(10);
-//        correctStoplineDirection(timeDifference, 0.5, 1);
-//        timedDrive(0, 0.1, 1, NULL, true, NULL);
-//        timedDrive(0, 0.1, 10, NULL, true, NULL);
-//        break;
-//
-//      case 3: 
-//        HM10.write("#300 Intersection 2\n");
-//        timedStop(10);
-//        correctStoplineDirection(timeDifference, 0.5, 1);
-//        timedDrive(0, 0.1, 1, NULL, false, NULL);
-//        timedDrive(0, 0.1, 10, NULL, true, NULL);
-//        break;
-//
-//      case 4:
-//        HM10.write("#400 Backward Parking\n");
-//        backwardParking(timeDifference);
-//        break;
+      case 1:
+        HM10.write("#100 Parallel Parking\n");
+        parallelParking(timeDifference);
+        break;
+
+      case 2:
+        HM10.write("#200 Intersection 1\n");
+        timedStop(10);
+        correctStoplineDirection(timeDifference, 0.5, 1);
+        timedDrive(0, 0.1, 4, NULL, false, NULL);
+        timedDrive(0, 0.1, 10, NULL, true, NULL);
+        break;
+
+      case 3: 
+        HM10.write("#300 Intersection 2\n");
+        timedStop(10);
+        correctStoplineDirection(timeDifference, 0.5, 1);
+        timedDrive(0, 0.1, 2, NULL, true, NULL);
+        timedDrive(0, 0.1, 10, NULL, true, NULL);
+        break;
+
+      case 4:
+        HM10.write("#400 Backward Parking\n");
+        backwardParking(timeDifference);
+        break;
       
-      case 1: 
+      case 5: 
         HM10.write("#500 Avoidence\n");
         avoidence();
         break;
-//
-//      case 6:
-//        HM10.write("#600 Finish Line\n");  
-//        timedStop(2000);
-//        break;
+
+      case 6:
+        HM10.write("#600 Finish Line\n");  
+        timedStop(2000);
+        break;
                 
       default:
         HM10.write("#Error:Unidentified Course Location\n");
